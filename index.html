@@ -1,22 +1,39 @@
+TWD
+├── index.html
+└── icon.png
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
+    <meta name="theme-color" content="#101411">
+
+    <link rel="icon"
+          type="image/png"
+          href="icon.png">
+
+    <link rel="apple-touch-icon"
+          href="icon.png">
+
     <title>NutriTrack</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
 
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f6f8;
+            font-family: -apple-system, BlinkMacSystemFont,
+                         "Segoe UI", Arial, sans-serif;
+
+            background: #f3f5f4;
             color: #111;
         }
 
@@ -24,7 +41,7 @@
             padding: 25px 20px 10px;
         }
 
-        h1 {
+        header h1 {
             margin: 0;
             font-size: 30px;
         }
@@ -41,24 +58,34 @@
 
         .card {
             background: white;
-            border-radius: 20px;
+            border-radius: 22px;
             padding: 20px;
             margin-bottom: 15px;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.06);
         }
 
-        .calories {
+        .calorie-card {
             text-align: center;
+            background: #101411;
+            color: white;
         }
 
-        .calories-number {
-            font-size: 45px;
-            font-weight: bold;
+        .calorie-title {
+            opacity: 0.7;
+            font-size: 14px;
+        }
+
+        .calorie-number {
+            font-size: 44px;
+            font-weight: 800;
             margin: 10px 0;
         }
 
-        .subtitle {
-            color: #777;
+        .calorie-subtitle {
+            opacity: 0.6;
+            font-size: 13px;
         }
 
         .stats {
@@ -68,41 +95,97 @@
         }
 
         .stat {
-            background: #fff;
-            border-radius: 18px;
+            background: white;
+            border-radius: 20px;
             padding: 18px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.05);
         }
 
         .stat-title {
-            color: #777;
             font-size: 14px;
+            color: #777;
         }
 
         .stat-value {
             font-size: 23px;
-            font-weight: bold;
-            margin-top: 5px;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+
+        h2 {
+            font-size: 19px;
+            margin-top: 0;
         }
 
         .macro {
             margin-top: 15px;
         }
 
-        .macro-line {
+        .macro-row {
             display: flex;
             justify-content: space-between;
-            margin: 12px 0;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
         }
 
-        button {
+        .macro-row:last-child {
+            border-bottom: none;
+        }
+
+        .button {
             width: 100%;
-            padding: 15px;
             border: none;
-            border-radius: 15px;
-            font-size: 16px;
+            border-radius: 16px;
+            padding: 16px;
             margin-top: 10px;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .primary {
             background: #111;
             color: white;
+        }
+
+        .secondary {
+            background: #e8ece9;
+            color: #111;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 13px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            font-weight: 600;
+        }
+
+        .item-info {
+            color: #777;
+            font-size: 13px;
+            margin-top: 3px;
+        }
+
+        .delete {
+            border: none;
+            background: #eee;
+            border-radius: 10px;
+            padding: 8px 10px;
+            cursor: pointer;
         }
 
         nav {
@@ -110,99 +193,159 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: white;
+
+            background: rgba(255,255,255,0.96);
+
             display: flex;
             justify-content: space-around;
-            padding: 12px 5px;
+
+            padding: 10px 5px;
+
             border-top: 1px solid #ddd;
         }
 
         nav button {
+            border: none;
             background: none;
-            color: #555;
-            margin: 0;
-            padding: 8px 3px;
-            font-size: 12px;
+            color: #777;
+
+            font-size: 11px;
+            padding: 5px;
         }
 
         nav button.active {
             color: #111;
-            font-weight: bold;
+            font-weight: 700;
         }
+
+        .empty {
+            color: #888;
+            text-align: center;
+            padding: 15px 0;
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <header>
+
     <h1>NutriTrack</h1>
-    <div class="date">Aujourd'hui</div>
+
+    <div class="date" id="date">
+        Aujourd'hui
+    </div>
+
 </header>
+
 
 <main>
 
-    <div class="card calories">
 
-        <div class="subtitle">
+    <!-- CALORIES -->
+
+    <div class="card calorie-card">
+
+        <div class="calorie-title">
             Indicateur de la journée
         </div>
 
-        <div class="calories-number" id="remaining">
+        <div class="calorie-number"
+             id="remaining">
             2000 kcal
         </div>
 
-        <div class="subtitle">
-            restant à titre indicatif
+        <div class="calorie-subtitle">
+            valeur de démonstration
         </div>
 
     </div>
 
+
+    <!-- STATISTIQUES -->
 
     <div class="stats">
 
         <div class="stat">
+
             <div class="stat-title">
                 🍎 Alimentation
             </div>
 
-            <div class="stat-value" id="eaten">
+            <div class="stat-value"
+                 id="eaten">
                 0 kcal
             </div>
+
         </div>
 
 
         <div class="stat">
+
             <div class="stat-title">
                 🏃 Activité
             </div>
 
-            <div class="stat-value" id="activity">
+            <div class="stat-value"
+                 id="activity">
                 0 kcal
             </div>
+
         </div>
 
     </div>
 
 
+    <!-- MACROS -->
+
     <div class="card">
 
-        <h2>Macronutriments</h2>
+        <h2>
+            Macronutriments
+        </h2>
 
         <div class="macro">
 
-            <div class="macro-line">
-                <span>🥩 Protéines</span>
-                <strong id="protein">0 g</strong>
+            <div class="macro-row">
+
+                <span>
+                    🥩 Protéines
+                </span>
+
+                <strong id="protein">
+                    0 g
+                </strong>
+
             </div>
 
-            <div class="macro-line">
-                <span>🍞 Glucides</span>
-                <strong id="carbs">0 g</strong>
+
+            <div class="macro-row">
+
+                <span>
+                    🍞 Glucides
+                </span>
+
+                <strong id="carbs">
+                    0 g
+                </strong>
+
             </div>
 
-            <div class="macro-line">
-                <span>🥑 Lipides</span>
-                <strong id="fat">0 g</strong>
+
+            <div class="macro-row">
+
+                <span>
+                    🥑 Lipides
+                </span>
+
+                <strong id="fat">
+                    0 g
+                </strong>
+
             </div>
 
         </div>
@@ -210,22 +353,79 @@
     </div>
 
 
+    <!-- ALIMENTS -->
+
     <div class="card">
 
-        <h2>Actions</h2>
+        <h2>
+            🍎 Aliments d'aujourd'hui
+        </h2>
 
-        <button onclick="addFood()">
+        <div id="foodList">
+
+            <div class="empty">
+                Aucun aliment ajouté
+            </div>
+
+        </div>
+
+        <button
+            class="button primary"
+            onclick="addFood()">
+
             + Ajouter un aliment
-        </button>
 
-        <button onclick="addActivity()">
-            🏃 Ajouter une activité
         </button>
 
     </div>
 
+
+    <!-- ACTIVITÉS -->
+
+    <div class="card">
+
+        <h2>
+            🏃 Activités d'aujourd'hui
+        </h2>
+
+        <div id="activityList">
+
+            <div class="empty">
+                Aucune activité ajoutée
+            </div>
+
+        </div>
+
+        <button
+            class="button secondary"
+            onclick="addActivity()">
+
+            + Ajouter une activité
+
+        </button>
+
+    </div>
+
+
+    <!-- RESET -->
+
+    <div class="card">
+
+        <button
+            class="button secondary"
+            onclick="resetDay()">
+
+            🗑️ Réinitialiser la journée
+
+        </button>
+
+    </div>
+
+
 </main>
 
+
+<!-- MENU -->
 
 <nav>
 
@@ -259,94 +459,588 @@
 
 <script>
 
-let eaten = 0;
-let activity = 0;
 
-let protein = 0;
-let carbs = 0;
-let fat = 0;
+/* =========================
+   DONNÉES
+========================= */
+
+
+let foods =
+    JSON.parse(
+        localStorage.getItem("nutritrack_foods")
+    ) || [];
+
+
+let activities =
+    JSON.parse(
+        localStorage.getItem("nutritrack_activities")
+    ) || [];
+
+
+/*
+   Valeur de démonstration.
+   Elle sera remplacée plus tard.
+*/
 
 const dailyTarget = 2000;
 
 
+/* =========================
+   CALCULS
+========================= */
+
+
+function calculateCaloriesEaten() {
+
+    return foods.reduce(
+        (total, food) =>
+            total + food.calories,
+        0
+    );
+
+}
+
+
+function calculateCaloriesBurned() {
+
+    return activities.reduce(
+        (total, activity) =>
+            total + activity.calories,
+        0
+    );
+
+}
+
+
+function calculateProtein() {
+
+    return foods.reduce(
+        (total, food) =>
+            total + food.protein,
+        0
+    );
+
+}
+
+
+function calculateCarbs() {
+
+    return foods.reduce(
+        (total, food) =>
+            total + food.carbs,
+        0
+    );
+
+}
+
+
+function calculateFat() {
+
+    return foods.reduce(
+        (total, food) =>
+            total + food.fat,
+        0
+    );
+
+}
+
+
+/* =========================
+   SAUVEGARDE
+========================= */
+
+
+function saveData() {
+
+    localStorage.setItem(
+        "nutritrack_foods",
+        JSON.stringify(foods)
+    );
+
+    localStorage.setItem(
+        "nutritrack_activities",
+        JSON.stringify(activities)
+    );
+
+}
+
+
+/* =========================
+   AFFICHAGE
+========================= */
+
+
 function updateScreen() {
 
+
+    const eaten =
+        calculateCaloriesEaten();
+
+
+    const burned =
+        calculateCaloriesBurned();
+
+
+    const protein =
+        calculateProtein();
+
+
+    const carbs =
+        calculateCarbs();
+
+
+    const fat =
+        calculateFat();
+
+
     const remaining =
-        dailyTarget + activity - eaten;
+        dailyTarget +
+        burned -
+        eaten;
+
 
     document.getElementById("remaining")
         .textContent =
-        Math.max(remaining, 0) + " kcal";
+        Math.max(
+            remaining,
+            0
+        ) + " kcal";
+
 
     document.getElementById("eaten")
         .textContent =
-        eaten + " kcal";
+        Math.round(eaten) +
+        " kcal";
+
 
     document.getElementById("activity")
         .textContent =
-        activity + " kcal";
+        Math.round(burned) +
+        " kcal";
+
 
     document.getElementById("protein")
         .textContent =
-        protein + " g";
+        Math.round(protein) +
+        " g";
+
 
     document.getElementById("carbs")
         .textContent =
-        carbs + " g";
+        Math.round(carbs) +
+        " g";
+
 
     document.getElementById("fat")
         .textContent =
-        fat + " g";
+        Math.round(fat) +
+        " g";
+
+
+    displayFoods();
+
+    displayActivities();
+
+
 }
+
+
+/* =========================
+   ALIMENTS
+========================= */
 
 
 function addFood() {
 
-    const name =
-        prompt("Nom de l'aliment :");
 
-    if (!name) return;
+    const name =
+        prompt(
+            "Nom de l'aliment :"
+        );
+
+
+    if (!name) {
+        return;
+    }
+
 
     const calories =
-        Number(prompt("Calories :"));
+        Number(
+            prompt(
+                "Calories :"
+            )
+        ) || 0;
 
-    const p =
-        Number(prompt("Protéines (g) :"));
 
-    const c =
-        Number(prompt("Glucides (g) :"));
+    const protein =
+        Number(
+            prompt(
+                "Protéines (g) :"
+            )
+        ) || 0;
 
-    const f =
-        Number(prompt("Lipides (g) :"));
 
-    eaten += calories;
-    protein += p;
-    carbs += c;
-    fat += f;
+    const carbs =
+        Number(
+            prompt(
+                "Glucides (g) :"
+            )
+        ) || 0;
+
+
+    const fat =
+        Number(
+            prompt(
+                "Lipides (g) :"
+            )
+        ) || 0;
+
+
+    foods.push({
+
+        id: Date.now(),
+
+        name: name,
+
+        calories: calories,
+
+        protein: protein,
+
+        carbs: carbs,
+
+        fat: fat
+
+    });
+
+
+    saveData();
 
     updateScreen();
+
 }
+
+
+/* =========================
+   AFFICHER ALIMENTS
+========================= */
+
+
+function displayFoods() {
+
+
+    const container =
+        document.getElementById(
+            "foodList"
+        );
+
+
+    if (foods.length === 0) {
+
+        container.innerHTML =
+            '<div class="empty">' +
+            'Aucun aliment ajouté' +
+            '</div>';
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    foods.forEach(
+        function(food) {
+
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className = "item";
+
+
+            div.innerHTML = `
+
+                <div>
+
+                    <div class="item-name">
+                        ${food.name}
+                    </div>
+
+                    <div class="item-info">
+                        ${Math.round(food.calories)}
+                        kcal •
+                        P ${Math.round(food.protein)}g •
+                        G ${Math.round(food.carbs)}g •
+                        L ${Math.round(food.fat)}g
+                    </div>
+
+                </div>
+
+                <button
+                    class="delete"
+                    onclick="deleteFood(${food.id})">
+
+                    🗑️
+
+                </button>
+
+            `;
+
+
+            container.appendChild(div);
+
+        }
+    );
+
+}
+
+
+/* =========================
+   SUPPRIMER ALIMENT
+========================= */
+
+
+function deleteFood(id) {
+
+
+    foods =
+        foods.filter(
+            food => food.id !== id
+        );
+
+
+    saveData();
+
+    updateScreen();
+
+}
+
+
+/* =========================
+   ACTIVITÉS
+========================= */
 
 
 function addActivity() {
 
-    const name =
-        prompt("Quelle activité ?");
 
-    if (!name) return;
+    const name =
+        prompt(
+            "Quelle activité ?"
+        );
+
+
+    if (!name) {
+        return;
+    }
+
 
     const calories =
-        Number(prompt("Calories estimées :"));
+        Number(
+            prompt(
+                "Calories estimées :"
+            )
+        ) || 0;
 
-    activity += calories;
+
+    activities.push({
+
+        id: Date.now(),
+
+        name: name,
+
+        calories: calories
+
+    });
+
+
+    saveData();
 
     updateScreen();
+
 }
 
 
+/* =========================
+   AFFICHER ACTIVITÉS
+========================= */
+
+
+function displayActivities() {
+
+
+    const container =
+        document.getElementById(
+            "activityList"
+        );
+
+
+    if (activities.length === 0) {
+
+        container.innerHTML =
+            '<div class="empty">' +
+            'Aucune activité ajoutée' +
+            '</div>';
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    activities.forEach(
+        function(activity) {
+
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className = "item";
+
+
+            div.innerHTML = `
+
+                <div>
+
+                    <div class="item-name">
+                        ${activity.name}
+                    </div>
+
+                    <div class="item-info">
+                        +${Math.round(activity.calories)}
+                        kcal estimées
+                    </div>
+
+                </div>
+
+                <button
+                    class="delete"
+                    onclick="deleteActivity(${activity.id})">
+
+                    🗑️
+
+                </button>
+
+            `;
+
+
+            container.appendChild(div);
+
+        }
+    );
+
+}
+
+
+/* =========================
+   SUPPRIMER ACTIVITÉ
+========================= */
+
+
+function deleteActivity(id) {
+
+
+    activities =
+        activities.filter(
+            activity =>
+                activity.id !== id
+        );
+
+
+    saveData();
+
+    updateScreen();
+
+}
+
+
+/* =========================
+   RÉINITIALISER
+========================= */
+
+
+function resetDay() {
+
+
+    const confirmation =
+        confirm(
+            "Supprimer toutes les données de la journée ?"
+        );
+
+
+    if (!confirmation) {
+        return;
+    }
+
+
+    foods = [];
+
+    activities = [];
+
+
+    saveData();
+
+    updateScreen();
+
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+
+function displayDate() {
+
+
+    const today =
+        new Date();
+
+
+    const options = {
+
+        weekday: "long",
+
+        day: "numeric",
+
+        month: "long"
+
+    };
+
+
+    document.getElementById(
+        "date"
+    ).textContent =
+        today.toLocaleDateString(
+            "fr-FR",
+            options
+        );
+
+}
+
+
+/* =========================
+   DÉMARRAGE
+========================= */
+
+
+displayDate();
+
 updateScreen();
+
 
 </script>
 
+
 </body>
+
 </html>
