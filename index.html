@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>NutriTrack</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f6f8;
+            color: #111;
+        }
+
+        header {
+            padding: 25px 20px 10px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .date {
+            color: #777;
+            margin-top: 5px;
+        }
+
+        main {
+            padding: 15px;
+            padding-bottom: 100px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+        }
+
+        .calories {
+            text-align: center;
+        }
+
+        .calories-number {
+            font-size: 45px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .subtitle {
+            color: #777;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .stat {
+            background: #fff;
+            border-radius: 18px;
+            padding: 18px;
+        }
+
+        .stat-title {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .stat-value {
+            font-size: 23px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .macro {
+            margin-top: 15px;
+        }
+
+        .macro-line {
+            display: flex;
+            justify-content: space-between;
+            margin: 12px 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            margin-top: 10px;
+            background: #111;
+            color: white;
+        }
+
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 5px;
+            border-top: 1px solid #ddd;
+        }
+
+        nav button {
+            background: none;
+            color: #555;
+            margin: 0;
+            padding: 8px 3px;
+            font-size: 12px;
+        }
+
+        nav button.active {
+            color: #111;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>NutriTrack</h1>
+    <div class="date">Aujourd'hui</div>
+</header>
+
+<main>
+
+    <div class="card calories">
+
+        <div class="subtitle">
+            Indicateur de la journée
+        </div>
+
+        <div class="calories-number" id="remaining">
+            2000 kcal
+        </div>
+
+        <div class="subtitle">
+            restant à titre indicatif
+        </div>
+
+    </div>
+
+
+    <div class="stats">
+
+        <div class="stat">
+            <div class="stat-title">
+                🍎 Alimentation
+            </div>
+
+            <div class="stat-value" id="eaten">
+                0 kcal
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="stat-title">
+                🏃 Activité
+            </div>
+
+            <div class="stat-value" id="activity">
+                0 kcal
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Macronutriments</h2>
+
+        <div class="macro">
+
+            <div class="macro-line">
+                <span>🥩 Protéines</span>
+                <strong id="protein">0 g</strong>
+            </div>
+
+            <div class="macro-line">
+                <span>🍞 Glucides</span>
+                <strong id="carbs">0 g</strong>
+            </div>
+
+            <div class="macro-line">
+                <span>🥑 Lipides</span>
+                <strong id="fat">0 g</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Actions</h2>
+
+        <button onclick="addFood()">
+            + Ajouter un aliment
+        </button>
+
+        <button onclick="addActivity()">
+            🏃 Ajouter une activité
+        </button>
+
+    </div>
+
+</main>
+
+
+<nav>
+
+    <button class="active">
+        🏠<br>
+        Aujourd'hui
+    </button>
+
+    <button>
+        🍎<br>
+        Alimentation
+    </button>
+
+    <button>
+        🏃<br>
+        Activités
+    </button>
+
+    <button>
+        📊<br>
+        Analyse
+    </button>
+
+    <button>
+        ⚙️<br>
+        Profil
+    </button>
+
+</nav>
+
+
+<script>
+
+let eaten = 0;
+let activity = 0;
+
+let protein = 0;
+let carbs = 0;
+let fat = 0;
+
+const dailyTarget = 2000;
+
+
+function updateScreen() {
+
+    const remaining =
+        dailyTarget + activity - eaten;
+
+    document.getElementById("remaining")
+        .textContent =
+        Math.max(remaining, 0) + " kcal";
+
+    document.getElementById("eaten")
+        .textContent =
+        eaten + " kcal";
+
+    document.getElementById("activity")
+        .textContent =
+        activity + " kcal";
+
+    document.getElementById("protein")
+        .textContent =
+        protein + " g";
+
+    document.getElementById("carbs")
+        .textContent =
+        carbs + " g";
+
+    document.getElementById("fat")
+        .textContent =
+        fat + " g";
+}
+
+
+function addFood() {
+
+    const name =
+        prompt("Nom de l'aliment :");
+
+    if (!name) return;
+
+    const calories =
+        Number(prompt("Calories :"));
+
+    const p =
+        Number(prompt("Protéines (g) :"));
+
+    const c =
+        Number(prompt("Glucides (g) :"));
+
+    const f =
+        Number(prompt("Lipides (g) :"));
+
+    eaten += calories;
+    protein += p;
+    carbs += c;
+    fat += f;
+
+    updateScreen();
+}
+
+
+function addActivity() {
+
+    const name =
+        prompt("Quelle activité ?");
+
+    if (!name) return;
+
+    const calories =
+        Number(prompt("Calories estimées :"));
+
+    activity += calories;
+
+    updateScreen();
+}
+
+
+updateScreen();
+
+</script>
+
+</body>
+</html>
